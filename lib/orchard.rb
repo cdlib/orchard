@@ -11,16 +11,16 @@ require 'orchard/version'
 # 
 # ==== Usage Examples
 #
-#   Pairtree.encode('ark:/13030/xt12t3')
+#   Orchard::Pairtree.encode('ark:/13030/xt12t3')
 #   # => ark+=13030=xt12t3
 #
-#   Pairtree.decode('ark+=13030=xt12t3')
+#   Orchard::Pairtree.decode('ark+=13030=xt12t3')
 #   # => ark:/13030/xt12t3
 #
-#   Pairtree.id_to_ppath('ark:/13030/xt12t3')
+#   Orchard::Pairtree.id_to_ppath('ark:/13030/xt12t3')
 #   # => ar/k+/=1/30/30/=x/t1/2t/3
 #
-#   Pairtree.ppath_to_id('ar/k+/=1/30/30/=x/t1/2t/3')
+#   Orchard::Pairtree.ppath_to_id('ar/k+/=1/30/30/=x/t1/2t/3')
 #   # => ark:/13030/xt12t3
 
 module Orchard
