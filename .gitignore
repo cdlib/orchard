@@ -1,0 +1,8 @@
+# Ignore mac generated files
+.DS_Store
+
+# Ignore gem builds
+*.gem
+
+# Ignore generated rdoc
+rdoc/
