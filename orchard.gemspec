@@ -10,12 +10,12 @@ Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Stephanie Collett"]
   s.email       = ["stephanie.collett@ucop.edu"]
-  # s.homepage    = "http://github.com/scollett/orchard"
+  s.homepage    = "http://github.com/cdlib/orchard"
   s.summary     = "Pairtree implmentation for Ruby"
   s.description = "Orchard translates id strings to/from Pairtree paths for use with Pairtree file repositories."
  
   s.required_rubygems_version = ">= 1.3.6"
-  # s.rubyforge_project         = "orchard"
+  s.rubyforge_project         = "orchard"
  
   s.add_development_dependency "thoughtbot-shoulda"
  
