@@ -5,6 +5,10 @@ More information can be found at:
 
   Pairtrees for Object Storage
   https://confluence.ucop.edu/display/Curation/PairTree
+  
+==== Install
+
+gem install orchard
 
 ==== Usage Examples
 
