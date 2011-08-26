@@ -38,5 +38,6 @@ gem install orchard
   # => /absolute_path/repo/pairtree_root/xy/z/object
   
 ==== Thanks
+
   Erik Hetzner for contributions.
   Ben O'Steen (this module is a semi-port of his Python Pairtree module, http://github.com/benosteen/pairtree)
