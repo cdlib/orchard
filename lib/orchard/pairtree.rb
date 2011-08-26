@@ -1,3 +1,4 @@
+require 'find'
 module Orchard
   # Provides a set of methods for working with Pairtree paths.
   class Pairtree
@@ -8,6 +9,53 @@ module Orchard
     CHAR_ENCODE_CONV = {'/'=>'=',':'=>'+','.'=>','}
     CHAR_DECODE_CONV = {'='=>'/','+'=>':',','=>'.'}
     
+    # ---------------------------
+    # Instance Methods
+    # ---------------------------    
+    def initialize(*args)
+      path = args[0]
+      options = args[1] || {}
+      
+    end
+    
+    def each
+      dirs = ["pairtree_root"]
+      excludes = []
+      for dir in dirs
+        Find.find(dir) do |path|
+          if FileTest.directory?(path)
+            if excludes.include?(File.basename(path))
+              Find.prune       # Don't look any further into this directory.
+            else
+              next
+            end
+          else
+            p path
+          end
+        end
+      end   
+    end
+    
+    def test(path)
+       begin
+         if File.lstat(path).directory?
+           begin
+             dir = Dir.open(path)
+             dir.each do |f|
+               unless f == "." or f == ".."
+                 test(f)
+               end             
+              end
+           ensure
+             dir.close
+           end
+         end
+       end
+    end
+    
+    # ---------------------------
+    # Class Methods
+    # ---------------------------
     # Encodes a given +id+ <em>(String)</em> according to the "identifier string 
     # cleaning" in the pairtree 0.1 specification. 
     #
@@ -89,7 +137,7 @@ module Orchard
     #
     # ==== Options
     # * <tt>:prefix => Pairtree prefix</tt> - This will remove the prefix from the id
-    #   before creating a pairpath.
+    #   before creating a pairpath. (String)
     #
     # ==== Examples
     #
@@ -143,7 +191,7 @@ module Orchard
     #
     # ==== Options
     # * <tt>:prefix => Pairtree prefix</tt> - This will remove the prefix from the id
-    #   before creating a pairpath.
+    #   before creating a pairpath. (String)
     #
     # ==== Examples
     #
@@ -164,6 +212,52 @@ module Orchard
       end
       id = self.decode(match[1].delete('/'))
       options[:prefix].nil? ? id : options[:prefix] + id
+    end
+    
+    # Iterates a given +pairpath+ with a +block+. 
+    #
+    #   iterate(pairtree_path,options,&block)
+    #     # pairtree_path is a String
+    #
+    # ==== Options
+    # * <tt>:raise_errors => Raise encountered errors/tt> - This will show (true) or surpress 
+    #   (false) ecountered errors. (Boolean)
+    # * <tt>:error_handling => Function to call on error</tt> - The Proc will execute if errors occur.
+    #   Error passed into Proc as parameter. (Proc or Nil)
+    #
+    # ==== Examples
+    #
+    #   Pairtree.iterate('repo/pairtree_root/', true) do |path|
+    #     puts path
+    #   end
+    #   # => /absolute_path/repo/pairtree_root/ab/cd/e/object
+    #   ...
+    #   # => /absolute_path/repo/pairtree_root/xy/z/object
+    #
+    def self.iterate(*args,&block)
+      #pairtree_path,raise_errors=false,error_handling=nil,&block
+      ppath = args[0]
+      options = args[1] || {}
+      Find.find(ppath) do |entry|
+        begin
+          if File.directory?(entry)
+            case entry
+            when /^.*\/[^\/:.]{1,2}$/ # in pairtree
+            when /^.*[^\/]{3,}$/ # found object
+              block.call(File.absolute_path(entry))
+              Find.prune
+            when ppath # ignore initial path
+            else
+              raise UnexpectedPairpathError, File.absolute_path(entry)
+            end
+          else
+            raise UnexpectedPairpathError, File.absolute_path(entry)
+          end
+        rescue Exception => e
+          options[:error_handling].call(e) unless options[:error_handling].nil?
+          raise e if options[:raise_errors] == true
+        end
+      end
     end
     
     private

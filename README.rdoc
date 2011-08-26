@@ -8,11 +8,15 @@ More information can be found at:
 
 ==== Usage Examples
 
+===== Encoding/decoding strings according to the Pairtree specification
+
   Orchard::Pairtree.encode('ark:/13030/xt12t3')
   # => ark+=13030=xt12t3
 
   Orchard::Pairtree.decode('ark+=13030=xt12t3')
   # => ark:/13030/xt12t3
+
+===== Converting IDs to pairpaths and pairpaths to IDs
 
   Orchard::Pairtree.id_to_ppath('ark:/13030/xt12t3')
   # => ar/k+/=1/30/30/=x/t1/2t/3
@@ -20,6 +24,15 @@ More information can be found at:
   Orchard::Pairtree.ppath_to_id('ar/k+/=1/30/30/=x/t1/2t/3')
   # => ark:/13030/xt12t3
   
-===== Thanks
+===== Iterating through a Pairtree for processing
+
+  Orchard::Pairtree.iterate('repo/pairtree_root/', {:raise_errors => true}) do |path|
+    puts path
+  end
+  # => /absolute_path/repo/pairtree_root/ab/cd/e/object
+  ...
+  # => /absolute_path/repo/pairtree_root/xy/z/object
+  
+==== Thanks
   Erik Hetzner for contributions.
   Ben O'Steen (this module is a semi-port of his Python Pairtree module, http://github.com/benosteen/pairtree)

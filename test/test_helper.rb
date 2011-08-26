@@ -6,3 +6,4 @@ require 'rubygems'
 require 'orchard'
 gem 'thoughtbot-shoulda' 
 require 'shoulda'
+class HandledError < Exception; end

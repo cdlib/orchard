@@ -1,5 +1,6 @@
 require 'orchard/pairtree'
 require 'orchard/version'
+require 'find'
 
 # Orchard is a Ruby library for working with Pairtrees, a filesystem hierarchy 
 # mapping identifiers to object directories.
@@ -24,6 +25,6 @@ require 'orchard/version'
 #   # => ark:/13030/xt12t3
 
 module Orchard
-  class InvalidPPathError < StandardError
-  end
+  class InvalidPPathError < StandardError; end
+  class UnexpectedPairpathError < Exception; end
 end

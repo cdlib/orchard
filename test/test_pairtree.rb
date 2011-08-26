@@ -64,5 +64,20 @@ class TestPairtree< Test::Unit::TestCase
   # test ppath for french
   should_convert_to_ppath 'Années de Pèlerinage','An/n^/c3/^a/9e/s^/20/de/^2/0P/^c/3^/a8/le/ri/na/ge/' ,'french unicode - to_ppath'
   
+  should "iterate a pairtree" do
+    options = {:raise_errors => true}
+    Orchard::Pairtree.iterate('test/mock/pairtree_root/', options) do |path| 
+      assert_equal('pairtree_root/ab/cd/e/object', path.match('pairtree_root/ab/cd/e/object')[0])
+    end
+  end
+  
+  should "iterate pairtree and raise error" do
+    options = {:raise_errors => true}
+    assert_raise(Orchard::UnexpectedPairpathError) { Orchard::Pairtree.iterate('test/', options) {|path|}}
+  end
+  
+  should "iterate pairtree and handle error" do
+    options = {:raise_errors => false, :error_handling => Proc.new{|e| raise HandledError}}
+    assert_raise(HandledError) { Orchard::Pairtree.iterate('test/', options) {|path|}}
+  end
 end
-
