@@ -59,7 +59,8 @@ class TestPairtree< Test::Unit::TestCase
     11. Yiddish(2): איך קען עסן גלאָז און עס טוט מיר נישט װײ.
     12. Arabic(2): أنا قادر على أكل الزجاج و هذا لا يؤلمني.
     13. Japanese: 私はガラスを食べられます。それは私を傷つけません。
-    14. Thai: ฉันกินกระจกได้ แต่มันไม่ทำให้ฉันเจ็บ """', 'hardcore unicode test - roundtrip'
+    14. Thai: ฉันกินกระจกได้ แต่มันไม่ทำให้ฉันเจ็บ
+    15. Pairtree: 🍐🌳 (U+1F350 U+1F333)"""', 'hardcore unicode test - roundtrip'
 
   # test ppath for french
   should_convert_to_ppath 'Années de Pèlerinage','An/n^/c3/^a/9e/s^/20/de/^2/0P/^c/3^/a8/le/ri/na/ge/' ,'french unicode - to_ppath'
