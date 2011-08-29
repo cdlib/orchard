@@ -6,6 +6,8 @@ More information can be found at:
   Pairtrees for Object Storage
   https://confluence.ucop.edu/display/Curation/PairTree
   
+Orchard requires Ruby 1.9.
+
 ==== Install
 
 gem install orchard
